@@ -7,9 +7,14 @@ class Router
 
   def run
     while @running
+      # TODO: login screen
+
       print_menu
       choice = gets.chomp.to_i
+
+      # Clearing the screen
       print `clear`
+
       route_action(choice)
     end
   end
