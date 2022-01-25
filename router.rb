@@ -6,9 +6,9 @@ class Router
   end
 
   def run
-    while @running
-      # TODO: login screen
+    # TODO: login screen
 
+    while @running
       print_menu
       choice = gets.chomp.to_i
 
