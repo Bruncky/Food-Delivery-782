@@ -1,4 +1,4 @@
-class MealView
+class MealsView
   def ask_user_for(stuff)
     puts "#{stuff}?"
     print '> '

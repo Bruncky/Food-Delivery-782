@@ -4,7 +4,7 @@ require_relative '../models/customer'
 class CustomersController
   def initialize(customer_repository)
     @customer_repository = customer_repository
-    @view = CustomerView.new
+    @view = CustomersView.new
   end
 
   def add
