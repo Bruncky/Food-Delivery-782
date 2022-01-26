@@ -10,6 +10,8 @@ Lint/UnusedMethodArgument:
   Enabled: false
 Layout/EmptyLines:
   Enabled: false
+Metrics/MethodLength:
+  Max: 15
 Style/RedundantReturn:
   Enabled: false
 Style/SelfAssignment:
