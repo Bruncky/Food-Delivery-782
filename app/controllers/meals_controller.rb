@@ -21,4 +21,6 @@ class MealsController
 
     @view.display(meals)
   end
+
+  def mark_as_delivered; end
 end
