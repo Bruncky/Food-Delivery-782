@@ -2,9 +2,9 @@ require_relative "support/csv_helper"
 
 begin
   require_relative "../app/controllers/meals_controller"
-  require_relative "../app/repositories/meal_repository"
+  require_relative "../app/repositories/meals_repository"
 rescue LoadError => e
-  if e.message =~ /meal_repository/ || e.message =~ /meals_controller/
+  if e.message =~ /meals_repository/ || e.message =~ /meals_controller/
     describe "MealsController" do
       it "You need a `meals_controller.rb` file for your `MealsController`" do
         fail
@@ -27,13 +27,13 @@ describe "MealsController", :meal do
     ]
   end
   let(:csv_path) { "spec/support/meals.csv" }
-  let(:repository) { MealRepository.new(csv_path) }
+  let(:repository) { MealsRepository.new(csv_path) }
 
   before(:each) do
     CsvHelper.write_csv(csv_path, meals)
   end
 
-  it "should be initialized with a `MealRepository` instance" do
+  it "should be initialized with a `MealsRepository` instance" do
     controller = MealsController.new(repository)
     expect(controller).to be_a(MealsController)
   end

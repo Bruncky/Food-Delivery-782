@@ -2,11 +2,11 @@ require "fileutils"
 require_relative "support/csv_helper"
 
 begin
-  require_relative "../app/repositories/customer_repository"
+  require_relative "../app/repositories/customers_repository"
 rescue LoadError => e
-  if e.message =~ /customer_repository/
-    describe "CustomerRepository" do
-      it "You need a `customer_repository.rb` file for your `CustomerRepository`" do
+  if e.message =~ /customers_repository/
+    describe "CustomersRepository" do
+      it "You need a `customers_repository.rb` file for your `CustomersRepository`" do
         fail
       end
     end
@@ -15,7 +15,7 @@ rescue LoadError => e
   end
 end
 
-describe "CustomerRepository", :customer do
+describe "CustomersRepository", :customer do
   let(:customers) do
     [
       [ "id", "name", "address" ],
@@ -37,26 +37,26 @@ describe "CustomerRepository", :customer do
 
   describe "#initialize" do
     it "should take one argument: the CSV file path to store customers" do
-      expect(CustomerRepository.instance_method(:initialize).arity).to eq(1)
+      expect(CustomersRepository.instance_method(:initialize).arity).to eq(1)
     end
 
     it "should not crash if the CSV path does not exist yet. Hint: use File.exist?" do
-      expect { CustomerRepository.new("unexisting_file.csv") }.not_to raise_error
+      expect { CustomersRepository.new("unexisting_file.csv") }.not_to raise_error
     end
 
     it "should store customers in memory in an instance variable `@customers` or `@elements`" do
-      repo = CustomerRepository.new(csv_path)
+      repo = CustomersRepository.new(csv_path)
       expect(elements(repo)).to be_a(Array)
     end
 
     it "should load existing customers from the CSV" do
-      repo = CustomerRepository.new(csv_path)
+      repo = CustomersRepository.new(csv_path)
       loaded_customers = elements(repo) || []
       expect(loaded_customers.length).to eq(3)
     end
 
     it "should fill the `@customers` with instances of `Customer`, setting the correct types on each property" do
-      repo = CustomerRepository.new(csv_path)
+      repo = CustomersRepository.new(csv_path)
       loaded_customers = elements(repo) || []
       fail if loaded_customers.empty?
       loaded_customers.each do |customer|
@@ -68,14 +68,14 @@ describe "CustomerRepository", :customer do
 
   describe "#create" do
     it "should create a customer to the in-memory list" do
-      repo = CustomerRepository.new(csv_path)
+      repo = CustomersRepository.new(csv_path)
       new_customer = Customer.new(address: "Gary", name: "Michael Jackson")
       repo.create(new_customer)
       expect(repo.all.length).to eq(4)
     end
 
     it "should set the new customer id" do
-      repo = CustomerRepository.new(csv_path)
+      repo = CustomersRepository.new(csv_path)
       hawaii_customer = Customer.new(address: "Gary", name: "Michael Jackson")
       repo.create(hawaii_customer)
       expect(hawaii_customer.id).to eq(4)
@@ -88,7 +88,7 @@ describe "CustomerRepository", :customer do
       csv_path = "unexisting_empty_customers.csv"
       FileUtils.remove_file(csv_path, force: true)
 
-      repo = CustomerRepository.new(csv_path)
+      repo = CustomersRepository.new(csv_path)
       hawaii_customer = Customer.new(address: "Gary", name: "Michael Jackson")
       repo.create(hawaii_customer)
       expect(hawaii_customer.id).to eq(1)
@@ -100,11 +100,11 @@ describe "CustomerRepository", :customer do
       csv_path = "spec/support/empty_customers.csv"
       FileUtils.remove_file(csv_path, force: true)
 
-      repo = CustomerRepository.new(csv_path)
+      repo = CustomersRepository.new(csv_path)
       hawaii_customer = Customer.new(address: "Gary", name: "Michael Jackson")
       repo.create(hawaii_customer)
 
-      repo = CustomerRepository.new(csv_path)
+      repo = CustomersRepository.new(csv_path)
       expect(repo.all.length).to eq(1)
       expect(repo.all[0].id).to eq(1)
       expect(repo.all[0].name).to eq("Michael Jackson")
@@ -114,7 +114,7 @@ describe "CustomerRepository", :customer do
       repo.create(rucola_customer)
       expect(rucola_customer.id).to eq(2)
 
-      repo = CustomerRepository.new(csv_path)
+      repo = CustomersRepository.new(csv_path)
       expect(repo.all.length).to eq(2)
       expect(repo.all[1].id).to eq(2)
       expect(repo.all[1].name).to eq("Freddie Mercury")
@@ -126,20 +126,20 @@ describe "CustomerRepository", :customer do
 
   describe "#all" do
     it "should return all the customers stored by the repo" do
-      repo = CustomerRepository.new(csv_path)
+      repo = CustomersRepository.new(csv_path)
       expect(repo.all).to be_a(Array)
       expect(repo.all[0].name).to eq("Paul McCartney")
     end
 
-    it "CustomerRepository should not expose the @customers through a reader/method" do
-      repo = CustomerRepository.new(csv_path)
+    it "CustomersRepository should not expose the @customers through a reader/method" do
+      repo = CustomersRepository.new(csv_path)
       expect(repo).not_to respond_to(:customers)
     end
   end
 
   describe "#find" do
     it "should retrieve a specific customer based on its id" do
-      repo = CustomerRepository.new(csv_path)
+      repo = CustomersRepository.new(csv_path)
       customer = repo.find(3)
       expect(customer.id).to eq(3)
       expect(customer.name).to eq("John Entwistle")
