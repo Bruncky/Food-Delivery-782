@@ -16,6 +16,10 @@ class EmployeesRepository
     @employees.select { |employee| employee.rider? }
   end
 
+  def all
+    @employees
+  end
+
   def find(id)
     @employees.find { |employee| employee.id == id }
   end
