@@ -1,4 +1,6 @@
 class Employee
+  attr_reader :id, :username, :password
+
   def initialize(attributes = {})
     # id, username, password, role
     @id = attributes[:id]
@@ -15,10 +17,3 @@ class Employee
     @role == 'rider'
   end
 end
-
-# TESTING
-
-employee1 = Employee.new(username: 'bruncky', password: 'secret', role: 'manager')
-p employee1
-p employee1.manager?
-p employee1.rider?
