@@ -1,3 +1,5 @@
+require_relative '../views/sessions_view'
+
 class SessionsController
   def initialize(employees_repository)
     @employees_repository = employees_repository
@@ -17,8 +19,10 @@ class SessionsController
     # 4. Match the password
     if employee && employee.password == password
       @view.valid_credentials(username)
+      employee
     else
       @view.invalid_credentials
+      sign_in    # RECURSIVE CALL
     end
   end
 end
